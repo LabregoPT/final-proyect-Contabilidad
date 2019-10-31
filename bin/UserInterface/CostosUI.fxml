@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserInterface.CostosController">
+   <top>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="254.0" text="Calcular Costos indirectos Aplicados" BorderPane.alignment="CENTER" />
+   </top>
+   <right>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="366.0" prefWidth="138.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="152.0" text="Numero de Orden" />
+            <TextField fx:id="OrderNumTF" />
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="134.0" text="Material Directo" />
+            <TextField fx:id="DirectMaterialTF" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="134.0" text="Mano de Obra Directo" />
+            <TextField fx:id="ManoDeObraTF" />
+            <Button fx:id="AddOrderBt" mnemonicParsing="false" onAction="#AddOrder" text="Agregar">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="40.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets right="5.0" />
+         </padding>
+      </VBox>
+   </right>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <VBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="92.0" prefWidth="462.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="228.0" text="Agregar Costo indirecto de Fabricacion">
+                     <VBox.margin>
+                        <Insets left="100.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="CIFNameTF" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="178.0" promptText=" Nombre Del Costo Indirecto">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="150.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="CostoIndirectoTF" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="175.0" promptText="Valor de Costo Indirecto">
+                     <VBox.margin>
+                        <Insets left="150.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button fx:id="CostoIndirectoBt" mnemonicParsing="false" onAction="#AgregarCIF" prefHeight="26.0" prefWidth="118.0" text="Agregar">
+                     <VBox.margin>
+                        <Insets left="150.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <TextArea fx:id="ResultTA" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="260.0" prefWidth="310.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </BorderPane.margin>
+            </TextArea>
+         </center>
+         <left>
+            <Button fx:id="CalcularCostosBt" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="66.0" prefWidth="82.0" text=" Calcular" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="80.0" left="10.0" />
+               </BorderPane.margin>
+            </Button>
+         </left>
+      </BorderPane>
+   </center>
+</BorderPane>
