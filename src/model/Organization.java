@@ -21,8 +21,8 @@ public class Organization implements Serializable {
 	/** The name of the real base. */
 	private String realBaseName;
 	
-	/** The affectation percentage. */
-	private String percentage;
+	/** The affectation rate. */
+	private double percentage;
 	
 	
 	/**
@@ -69,6 +69,7 @@ public class Organization implements Serializable {
 	}
 
 	public void registerOrder(Orden o) {
+		o.setCif(percentage);
 		orders.add(o);
 	}
 
@@ -87,5 +88,50 @@ public class Organization implements Serializable {
 			}
 		}
 		return false;
+	}
+	
+	public void registerRate(String n, double p) {
+		realBaseName = n;
+		percentage = p;
+	}
+	
+	/**
+	 * Returns the name of the applied real base name. Defaults to "Base Real Aplicada".
+	 * @return Either the name of the applied real base name, or the default value.
+	 */
+	public String getRealBaseName() {
+		if(realBaseName == null) {
+			return "Base Real Aplicada";
+		}else {
+			return realBaseName;
+		}
+	}
+	
+	public String calculateCIF() {
+		double totalMod = 0.0;
+		double totalMD = 0.0;
+		double totalCIF = 0.0;
+		for(Orden o : orders) {
+			totalMod += o.getMOD();
+			totalMD += o.getMD();
+			totalCIF += o.getCIF();
+		}
+		
+		String out = "Se han registrado " + orders.size() + " órdenes.";
+		out += "\nSus costos sumados son:";
+		out += "\n En Mano de Obra Directa: " + totalMod;
+		out += "\n En Materiales Directos: " + totalMD;
+		out += "\n En Costos Indirectos de Fabricación: " + totalCIF;
+		
+		out += "\n\nSe registraron " + cis.size() + " otros costos.";
+		double otherCI = 0.0;
+		for(CostoIndirecto c : cis) {
+			otherCI += c.getValue();
+			out += "\n En "+c.getName()+": " + c.getValue();
+		}
+		out += "\n Para un total de " + otherCI+" en otros costos,";
+		
+		out += "\n\nEn total, los costos de producción suman " + totalMod+totalMD+totalCIF+otherCI;
+		return out;
 	}
 }

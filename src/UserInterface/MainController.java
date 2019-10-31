@@ -66,6 +66,7 @@ public class MainController {
 	@FXML
 	void initialize() {
 		model = new Organization();
+		appRealBaseTF.setPromptText(model.getRealBaseName());
 	}
 
 	/**
@@ -172,6 +173,7 @@ public class MainController {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			model = new Organization();
+			appRealBaseTF.setPromptText(model.getRealBaseName());
 		}
 	}
 
@@ -202,6 +204,7 @@ public class MainController {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 				model = (Organization) ois.readObject();
 				ois.close();
+				appRealBaseTF.setPromptText(model.getRealBaseName());
 			} catch (IOException e) {
 				Alert err = new Alert(AlertType.ERROR);
 				err.setContentText("Hubo un error cargando los archivos.");
@@ -225,7 +228,7 @@ public class MainController {
 			double materialDirecto = Double.parseDouble(directMatTF.getText());
 			double baseReal = Double.parseDouble(appRealBaseTF.getText());
 			if (model.searchNumberOrder(numOrder)) {
-				
+
 			} else {
 				Orden o = new Orden(numOrder, manoDeObra, materialDirecto, baseReal);
 				model.registerOrder(o);
@@ -249,7 +252,22 @@ public class MainController {
 	 */
 	@FXML
 	void registerRealBase(ActionEvent event) {
-		String 
+		try {
+			String name = realBaseTF.getText();
+			double percentage = Double.parseDouble(percentageCIF.getText());
+			model.registerRate(name, percentage);
+			appRealBaseTF.setPromptText("Cantidad de "+name+" usados.");
+		} catch (NumberFormatException e) {
+			// Display error message in case a NumberFormatException is caught, meaning the
+			// user put wrong data in input.
+			Alert alert = new Alert(Alert.AlertType.WARNING);
+			alert.initStyle(StageStyle.UTILITY);
+			alert.setTitle("Informacion");
+			alert.setHeaderText("¡Cuidado!");
+			alert.setContentText("Por favor ingrese un tipo de dato adecuado");
+			alert.showAndWait();
+		}
+
 	}
 
 	/**

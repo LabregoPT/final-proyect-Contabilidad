@@ -28,16 +28,12 @@ public class Orden {
 		return OrderNumber;
 	}
 
-	public void setMD(double mD) {
-		MD = mD;
+	public double getCIF() {
+		return CiF;
 	}
-
-	public void setMOD(double mOD) {
-		MOD = mOD;
-	}
-
-	public void setOrderNumber(int orderNumber) {
-		OrderNumber = orderNumber;
+	
+	public void setCif(double percentage) {
+		CiF = percentage*realBase;
 	}
 
 }
