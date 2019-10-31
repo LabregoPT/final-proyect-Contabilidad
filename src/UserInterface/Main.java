@@ -22,10 +22,14 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage Stage ) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GUI.fxml"));
+		Parent root = fxmlLoader.load();
+		Stage stage = new Stage();
 		Scene scene = new Scene(root);
-		Stage.setTitle("Costos");
-		Stage.setScene(scene);
-		Stage.show();
+		stage.setTitle("Costos");
+		MainController clr = fxmlLoader.getController();
+		clr.setStage(stage);
+		stage.setScene(scene);
+		stage.show();
 	}
 }

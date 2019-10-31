@@ -81,7 +81,7 @@ public class CostosController {
 	    	double MaterialDirecto = Double.parseDouble(DirectMaterialTF.getText());
 	    	
 	    	searchNumberOrder(numOrder);
-	    	Orden o = new Orden(numOrder,ManoDeObra,MaterialDirecto);
+	    	Orden o = new Orden(numOrder,ManoDeObra,MaterialDirecto, 0.0);
 	    	Orders.add(o);
 	    	
 	    	}catch(NumberFormatException ex) {
