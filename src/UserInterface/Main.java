@@ -22,7 +22,7 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage Stage ) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("CostosUI.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
 		Scene scene = new Scene(root);
 		Stage.setTitle("Costos");
 		Stage.setScene(scene);
