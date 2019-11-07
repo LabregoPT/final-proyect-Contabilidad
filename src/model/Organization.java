@@ -5,7 +5,6 @@ import java.util.*;
 
 /**
  * Class that will represent the organization who will use this program.
- * 
  * @version 1.0 - 10/2019
  */
 public class Organization implements Serializable {
@@ -60,23 +59,25 @@ public class Organization implements Serializable {
 		}
 	}
 
+	/**Returns the number of Indirect costs already registered in the program.*/
 	public int getCISSize() {
 		return cis.size();
 	}
 
+	/**Given the number of an IC already registered in the program, deletes it.*/
 	public void deleteCIF(int ind) {
 		cis.remove(ind);
 	}
 
+	/**Registers a new order in the Organization*/
 	public void registerOrder(Orden o) {
 		o.setCif(percentage);
 		orders.add(o);
 	}
 
 	/**
-	 * Searches for an order with a given number, and returns either true or false
+	 * Searches for an order with a given number, and returns either true or false 
 	 * if the order could be found.
-	 * 
 	 * @param number The number of the order to be searched.
 	 * @return True if the order was found, false otherwise.
 	 */
@@ -90,6 +91,7 @@ public class Organization implements Serializable {
 		return false;
 	}
 	
+	/**Registers a the CIF rate to be used in this program.*/
 	public void registerRate(String n, double p) {
 		realBaseName = n;
 		percentage = p;
@@ -107,16 +109,22 @@ public class Organization implements Serializable {
 		}
 	}
 	
+	/**
+	 * Computes the different CIF registered in the program.
+	 */
 	public String calculateCIF() {
+		//First sets all of the totals to 0.
 		double totalMod = 0.0;
 		double totalMD = 0.0;
 		double totalCIF = 0.0;
+		//Adds all of the totals already registered.
 		for(Orden o : orders) {
 			totalMod += o.getMOD();
 			totalMD += o.getMD();
 			totalCIF += o.getCIF();
 		}
 		
+		//Create output String with totals calculated.
 		String out = "Se han registrado " + orders.size() + " órdenes.";
 		out += "\nSus costos sumados son:";
 		out += "\n En Mano de Obra Directa: " + totalMod;
@@ -124,6 +132,8 @@ public class Organization implements Serializable {
 		out += "\n En Costos Indirectos de Fabricación: " + totalCIF;
 		
 		out += "\n\nSe registraron " + cis.size() + " otros costos.";
+		
+		//Sets the ICs to 0.
 		double otherCI = 0.0;
 		for(CostoIndirecto c : cis) {
 			otherCI += c.getValue();
