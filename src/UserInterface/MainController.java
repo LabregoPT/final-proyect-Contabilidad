@@ -108,7 +108,7 @@ public class MainController {
 			Alert alert = new Alert(Alert.AlertType.WARNING);
 			alert.initStyle(StageStyle.UTILITY);
 			alert.setTitle("Informacion");
-			alert.setHeaderText("¡Cuidado!");
+			alert.setHeaderText("¡Cuidado! No se han añadido ordenes al sistema.");
 			alert.setContentText(e.getMessage());
 			alert.showAndWait();
 			
