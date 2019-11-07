@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.*;
 
+import exceptions.NoDataException;
+
 /**
  * Class that will represent the organization who will use this program.
  * 
@@ -107,16 +109,25 @@ public class Organization implements Serializable {
 		}
 	}
 	
-	public String calculateCIF() {
+	public String calculateCIF() throws NoDataException {
 		double totalMod = 0.0;
 		double totalMD = 0.0;
 		double totalCIF = 0.0;
+		String out2 = "";
 		for(Orden o : orders) {
 			totalMod += o.getMOD();
 			totalMD += o.getMD();
 			totalCIF += o.getCIF();
+			out2 += "Numero de Orden : " + o.getOrderNumber() + "\n" +
+			"Material Directo : " + o.getMOD() + "\n" + 
+			"Mano de Obra Directa : " + o.getMOD() + "\n" +
+		 	"CIFS Aplicables :  " + o.getCIF() + "\n" + 
+			"-------------------------------------------------\n";
 		}
 		
+		if(totalMod == 0.0 && totalMD == 0.0 && totalCIF == 0.0) {
+		  throw new NoDataException();
+		}
 		String out = "Se han registrado " + orders.size() + " órdenes.";
 		out += "\nSus costos sumados son:";
 		out += "\n En Mano de Obra Directa: " + totalMod;
@@ -131,7 +142,8 @@ public class Organization implements Serializable {
 		}
 		out += "\n Para un total de " + otherCI+" en otros costos,";
 		
-		out += "\n\nEn total, los costos de producción suman " + totalMod+totalMD+totalCIF+otherCI;
-		return out;
+		out += "\n\nEn total, los costos de producción suman " + (totalMod+totalMD+totalCIF+otherCI);
+		String totalOut = out2 + "\n" +  "_______________________________________________" + "\n" +out;
+		return totalOut;
 	}
 }

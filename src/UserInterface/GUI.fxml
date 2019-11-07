@@ -25,10 +25,10 @@
             <MenuItem mnemonicParsing="false" onAction="#close" text="Salir" />
           </items>
         </Menu>
-            <Menu mnemonicParsing="false" text="CIF">
+            <Menu mnemonicParsing="false" text="Costos Indirectos">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#addCIF" text="Agregar CIF..." />
-                  <MenuItem mnemonicParsing="false" onAction="#deleteCIF" text="Eliminar CIF..." />
+                  <MenuItem mnemonicParsing="false" onAction="#addCIF" text="Agregar CI..." />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteCIF" text="Eliminar CI..." />
                </items>
             </Menu>
         <Menu mnemonicParsing="false" text="Ayuda">
@@ -60,7 +60,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="percentageCIF" layoutX="93.0" layoutY="39.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Tasa CIF en Porcentaje" />
-                  <Button mnemonicParsing="false" onAction="#registerRealBase" text="Registrar" />
+                  <Button fx:id="percentageCIFBttn" mnemonicParsing="false" onAction="#registerRealBase" text="Registrar" />
                   <Separator prefWidth="200.0" />
                   <Label layoutX="141.0" layoutY="10.0" text="Agregar Orden">
                      <font>

@@ -33,7 +33,7 @@ public class Orden {
 	}
 	
 	public void setCif(double percentage) {
-		CiF = percentage*realBase;
+		CiF = (percentage/100)*realBase;
 	}
 
 }

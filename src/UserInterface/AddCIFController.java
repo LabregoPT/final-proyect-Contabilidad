@@ -26,6 +26,8 @@ public class AddCIFController {
 
 	/** The IFC to be added to the system. */
 	private CostoIndirecto ci;
+	
+	private Organization model;
 
 	/**
 	 * Handles the event in which the confirmation button is pressed.
@@ -38,6 +40,7 @@ public class AddCIFController {
 			String name = cifNameTF.getText();
 			double val = Double.parseDouble(cifValueTF.getText());
 			ci = new CostoIndirecto(name, val);
+			model.registerIFC(ci);
 			stage.close();
 		} catch (NumberFormatException e) {
 			Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -47,6 +50,10 @@ public class AddCIFController {
 			alert.setContentText("Por favor ingrese un tipo de dato adecuado");
 			alert.showAndWait();
 		}
+	}
+	
+	void setModel(Organization m) {
+		model = m;
 	}
 	
 	/**
