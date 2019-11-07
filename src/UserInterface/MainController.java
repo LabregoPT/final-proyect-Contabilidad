@@ -3,6 +3,7 @@ package UserInterface;
 import java.io.*;
 import java.util.*;
 
+import exceptions.NoDataException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.*;
+import javafx.scene.control.Button;
 
 public class MainController {
 
@@ -54,6 +56,9 @@ public class MainController {
 	/** The organization that represents the model. */
 	private Organization model;
 
+	/** The Button that will register the CIF Percentage.*/
+	@FXML Button percentageCIFBttn;
+
 	/**
 	 * Sets a given Stage to the Scene in this app.
 	 * 
@@ -84,12 +89,9 @@ public class MainController {
 		stage.setTitle("Agregar CIF");
 		AddCIFController clr = fxmlLoader.getController();
 		clr.setStage(stage);
+		clr.setModel(model);
 		stage.setScene(scene);
 		stage.show();
-
-		// Add CIF to model.
-		CostoIndirecto ci = clr.getInput();
-		model.registerIFC(ci);
 	}
 
 	/**
@@ -99,7 +101,18 @@ public class MainController {
 	 */
 	@FXML
 	void calculateCIF(ActionEvent event) {
-		// TODO: Basically all of the logic of the program.
+	     try {
+			displayTA.setText(model.calculateCIF());
+		} catch (NoDataException e) {
+			
+			Alert alert = new Alert(Alert.AlertType.WARNING);
+			alert.initStyle(StageStyle.UTILITY);
+			alert.setTitle("Informacion");
+			alert.setHeaderText("¡Cuidado!");
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
+			
+		}
 	}
 
 	/**
@@ -227,11 +240,20 @@ public class MainController {
 			double manoDeObra = Double.parseDouble(modTF.getText());
 			double materialDirecto = Double.parseDouble(directMatTF.getText());
 			double baseReal = Double.parseDouble(appRealBaseTF.getText());
-			if (model.searchNumberOrder(numOrder)) {
-
-			} else {
+			if (!model.searchNumberOrder(numOrder)) {
 				Orden o = new Orden(numOrder, manoDeObra, materialDirecto, baseReal);
 				model.registerOrder(o);
+				orderNumberTF.setText("");
+				modTF.setText("");
+				directMatTF.setText("");
+				appRealBaseTF.setText("");
+			} else {
+				Alert alert = new Alert(Alert.AlertType.WARNING);
+				alert.initStyle(StageStyle.UTILITY);
+				alert.setTitle("Informacion");
+				alert.setHeaderText("¡Cuidado!");
+				alert.setContentText("El numero de orden que se intenta registrar ya se encuentra registrado.");
+				alert.showAndWait();
 			}
 		} catch (NumberFormatException ex) {
 			// Display error message in case a NumberFormatException is caught, meaning the
@@ -257,6 +279,9 @@ public class MainController {
 			double percentage = Double.parseDouble(percentageCIF.getText());
 			model.registerRate(name, percentage);
 			appRealBaseTF.setPromptText("Cantidad de "+name+" usados.");
+			realBaseTF.setDisable(true);
+			percentageCIF.setDisable(true);
+			percentageCIFBttn.setDisable(true);
 		} catch (NumberFormatException e) {
 			// Display error message in case a NumberFormatException is caught, meaning the
 			// user put wrong data in input.

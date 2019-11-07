@@ -3,8 +3,11 @@ package model;
 import java.io.Serializable;
 import java.util.*;
 
+import exceptions.NoDataException;
+
 /**
  * Class that will represent the organization who will use this program.
+ * 
  * @version 1.0 - 10/2019
  */
 public class Organization implements Serializable {
@@ -19,11 +22,10 @@ public class Organization implements Serializable {
 
 	/** The name of the real base. */
 	private String realBaseName;
-	
+
 	/** The affectation rate. */
 	private double percentage;
-	
-	
+
 	/**
 	 * Constructor method.
 	 */
@@ -59,25 +61,26 @@ public class Organization implements Serializable {
 		}
 	}
 
-	/**Returns the number of Indirect costs already registered in the program.*/
+	/** Returns the number of Indirect costs already registered in the program. */
 	public int getCISSize() {
 		return cis.size();
 	}
 
-	/**Given the number of an IC already registered in the program, deletes it.*/
+	/** Given the number of an IC already registered in the program, deletes it. */
 	public void deleteCIF(int ind) {
 		cis.remove(ind);
 	}
 
-	/**Registers a new order in the Organization*/
+	/** Registers a new order in the Organization */
 	public void registerOrder(Orden o) {
 		o.setCif(percentage);
 		orders.add(o);
 	}
 
 	/**
-	 * Searches for an order with a given number, and returns either true or false 
+	 * Searches for an order with a given number, and returns either true or false
 	 * if the order could be found.
+	 * 
 	 * @param number The number of the order to be searched.
 	 * @return True if the order was found, false otherwise.
 	 */
@@ -90,58 +93,69 @@ public class Organization implements Serializable {
 		}
 		return false;
 	}
-	
-	/**Registers a the CIF rate to be used in this program.*/
+
+	/** Registers a the CIF rate to be used in this program. */
 	public void registerRate(String n, double p) {
 		realBaseName = n;
 		percentage = p;
 	}
-	
+
 	/**
-	 * Returns the name of the applied real base name. Defaults to "Base Real Aplicada".
+	 * Returns the name of the applied real base name. Defaults to "Base Real
+	 * Aplicada".
+	 * 
 	 * @return Either the name of the applied real base name, or the default value.
 	 */
 	public String getRealBaseName() {
-		if(realBaseName == null) {
+		if (realBaseName == null) {
 			return "Base Real Aplicada";
-		}else {
+		} else {
 			return realBaseName;
 		}
 	}
-	
+
 	/**
 	 * Computes the different CIF registered in the program.
 	 */
-	public String calculateCIF() {
-		//First sets all of the totals to 0.
+	public String calculateCIF() throws NoDataException {
+		// First sets all of the totals to 0.
 		double totalMod = 0.0;
 		double totalMD = 0.0;
 		double totalCIF = 0.0;
-		//Adds all of the totals already registered.
-		for(Orden o : orders) {
+		// Adds all of the totals already registered.
+		String out2 = "";
+
+		for (Orden o : orders) {
 			totalMod += o.getMOD();
 			totalMD += o.getMD();
 			totalCIF += o.getCIF();
+			out2 += "Numero de Orden : " + o.getOrderNumber() + "\n" + "Material Directo : " + o.getMOD() + "\n"
+					+ "Mano de Obra Directa : " + o.getMOD() + "\n" + "CIFS Aplicables :  " + o.getCIF() + "\n"
+					+ "-------------------------------------------------\n";
 		}
-		
-		//Create output String with totals calculated.
+
+		// Create output String with totals calculated.
+		if (totalMod == 0.0 && totalMD == 0.0 && totalCIF == 0.0) {
+			throw new NoDataException();
+		}
 		String out = "Se han registrado " + orders.size() + " órdenes.";
 		out += "\nSus costos sumados son:";
 		out += "\n En Mano de Obra Directa: " + totalMod;
 		out += "\n En Materiales Directos: " + totalMD;
 		out += "\n En Costos Indirectos de Fabricación: " + totalCIF;
-		
+
 		out += "\n\nSe registraron " + cis.size() + " otros costos.";
-		
-		//Sets the ICs to 0.
+
+		// Sets the ICs to 0.
 		double otherCI = 0.0;
-		for(CostoIndirecto c : cis) {
+		for (CostoIndirecto c : cis) {
 			otherCI += c.getValue();
-			out += "\n En "+c.getName()+": " + c.getValue();
+			out += "\n En " + c.getName() + ": " + c.getValue();
 		}
-		out += "\n Para un total de " + otherCI+" en otros costos,";
-		
-		out += "\n\nEn total, los costos de producción suman " + totalMod+totalMD+totalCIF+otherCI;
-		return out;
+		out += "\n Para un total de " + otherCI + " en otros costos,";
+
+		out += "\n\nEn total, los costos de producción suman " + (totalMod + totalMD + totalCIF + otherCI);
+		String totalOut = out2 + "\n" + "_______________________________________________" + "\n" + out;
+		return totalOut;
 	}
 }
