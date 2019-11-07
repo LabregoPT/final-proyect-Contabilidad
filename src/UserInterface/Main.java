@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class Main extends Application{
 	
 	/**
-	 * Main method. Initialises the program.
+	 * Main method. Initializes the program.
 	 * @param args The arguments to launch the program with.
 	 */
 	public static void main(String [] args) {
