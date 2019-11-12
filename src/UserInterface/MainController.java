@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -72,6 +73,17 @@ public class MainController {
 	void initialize() {
 		model = new Organization();
 		appRealBaseTF.setPromptText(model.getRealBaseName());
+		
+		if(model.getPeriod() == null) {
+			
+		TextInputDialog dialog = new TextInputDialog("periodo contable");
+		dialog.setTitle("Escoger Periodo");
+		dialog.setHeaderText("Periodo contable");
+		dialog.setContentText("Porfavor digite el periodo que desea costear");
+		dialog.showAndWait();
+		model.setPeriod(dialog.getResult());
+		
+		}
 	}
 
 	/**
@@ -317,5 +329,7 @@ public class MainController {
 			oos.close();
 		}
 	}
+	
+	
 
 }

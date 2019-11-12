@@ -25,6 +25,10 @@ public class Organization implements Serializable {
 
 	/** The affectation rate. */
 	private double percentage;
+	
+	/** the accounting period*/
+	
+	private String period;
 
 	/**
 	 * Constructor method.
@@ -138,7 +142,7 @@ public class Organization implements Serializable {
 		if (totalMod == 0.0 && totalMD == 0.0 && totalCIF == 0.0) {
 			throw new NoDataException();
 		}
-		String out = "Se han registrado " + orders.size() + " órdenes.";
+		String out =  "Se han registrado " + orders.size() + " órdenes.";
 		out += "\nSus costos sumados son:";
 		out += "\n En Mano de Obra Directa: " + totalMod;
 		out += "\n En Materiales Directos: " + totalMD;
@@ -155,7 +159,15 @@ public class Organization implements Serializable {
 		out += "\n Para un total de " + otherCI + " en otros costos,";
 
 		out += "\n\nEn total, los costos de producción suman " + (totalMod + totalMD + totalCIF + otherCI);
-		String totalOut = out2 + "\n" + "_______________________________________________" + "\n" + out;
+		String totalOut =   "Periodo contable : " + period + "\n" +"\n" + out2 + "\n" + "_______________________________________________" + "\n" + out;
 		return totalOut;
+	}
+	
+	public String getPeriod() {
+		return period;
+	}
+	
+	public void setPeriod(String period) {
+		this.period = period;
 	}
 }
